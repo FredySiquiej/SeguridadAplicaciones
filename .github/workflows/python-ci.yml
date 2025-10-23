@@ -1,0 +1,59 @@
+name: Python CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Display Python version
+      run: python -c "import sys; print(f'Python {sys.version}')"
+      
+    - name: Test if server starts
+      run: |
+        python login_server.py &
+        SERVER_PID=$!
+        sleep 3
+        if ps -p $SERVER_PID > /dev/null; then
+          echo "✅ Server started successfully"
+          kill $SERVER_PID
+        else
+          echo "❌ Server failed to start"
+          exit 1
+        fi
+
+  deploy-demo:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Deploy to demo environment
+      run: |
+        echo "🚀 Deploying to demo environment..."
+        echo "📊 Application: Python Login System"
+        echo "🔧 Status: Deployment simulation completed"
+        echo "✅ The application is ready for testing"
+
+        
