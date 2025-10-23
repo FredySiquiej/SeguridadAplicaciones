@@ -2,9 +2,9 @@ name: Python CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, Desarrollo, Desarrollo-2 ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, Desarrollo, Desarrollo-2 ]
 
 jobs:
   test:
@@ -56,4 +56,3 @@ jobs:
         echo "🔧 Status: Deployment simulation completed"
         echo "✅ The application is ready for testing"
 
-        
