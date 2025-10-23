@@ -3,6 +3,8 @@ import json
 import hashlib
 from urllib.parse import parse_qs, urlparse
 import os
+import modulo_que_no_existe
+
 
 # Configuración de usuarios
 USERS = {
